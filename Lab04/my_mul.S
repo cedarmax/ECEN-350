@@ -11,10 +11,11 @@ my_mul:
 mult_loop:
         CBZ X19,  mult_eol
         ADD X9, X9, X0
-        SUB X19, X19, 1
+        SUB X19, X19, #1
         B mult_loop
 mult_eol:
         LDUR X19, [SP, 0]
+	ADD SP, SP, 16
         ADD X0, X9, XZR         // Move X9 to X0 to return
         BR X30
 
