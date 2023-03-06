@@ -1,26 +1,25 @@
 .globl lab04b
 .section .text
-
 lab04b:
 	SUB SP, SP, 16
-	STUR X30, [SP, 0]
-        stur x0, [sp, 8]
-        sub x1, x0, #1
-	cbz x0, zero
-//        BL lab04b
-factorial_loop:
-	cbz x1, end
+	STUR X30, [SP, 8]
+        STUR X0, [SP, 0]
+	SUB X0, X0, #1
+        CBZ X0, if
+	B else
+	//ADD SP, SP, #16
+	//BR X30
+if: //n==0, return 1
+        // may need to pop the stack
+	//LDUR X0, [SP, 0]
+	ORR X0, XZR, #1
+        BR X30
+else:
+	//SUB SP, SP, 16
+	BL lab04b
+        LDUR X1, [SP, 0]
 	BL my_mul
-	SUB X1, X1, #1
-	B factorial_loop
-end:
-	ldur x30, [sp, 0]
-        ldur x0, [sp, 8]
-	add sp, sp, 16 
-	BR X30
-zero:
-	ldur x30, [sp, 0]
-        ldur x0, [sp, 8]
-	add sp, sp, 16
-	add x0, x0, #1
+	LDUR x30, [sp, 8]
+	ADD sp, sp, 16
+
 	BR X30

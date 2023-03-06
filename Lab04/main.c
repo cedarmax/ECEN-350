@@ -9,7 +9,7 @@ int main(void)
 {
 //    long long int a = my_mul(3, 5);
 //    printf("Result of my_mul(3, 5) = %lld\n", a);
-	long long int n = lab04b(5);
-	printf("Result of lab04b(5) = %lld\n", n);
+	long long int n = lab04b(6);
+	printf("Result of lab04b(6) = %lld\n", n);
     return 0;
 }
