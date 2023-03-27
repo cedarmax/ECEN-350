@@ -1,0 +1,41 @@
+$date
+	Mon Mar 27 18:06:47 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module HalfAddTest_v $end
+$scope module dut $end
+$var wire 1 ! A $end
+$var wire 1 " B $end
+$var wire 1 # Cout $end
+$var wire 1 $ Sum $end
+$var wire 1 % a1 $end
+$var wire 1 & x $end
+$var wire 1 ' y $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+z'
+z&
+1%
+x$
+0#
+0"
+0!
+$end
+#190000
+x#
+x%
+1"
+#290000
+0"
+1!
+#390000
+1"
+#490000

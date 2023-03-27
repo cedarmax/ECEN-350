@@ -6,3 +6,4 @@ module Gates(in, out);
    or or0(out[1], in[0], in[1]);
    xor xor0(out[2], in[0], in[1]);
 endmodule
+

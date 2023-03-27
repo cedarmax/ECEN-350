@@ -25,6 +25,13 @@
 `define STRLEN 15
 module Mux21Test_v;
 
+initial //This initial block used to dump all wire/reg values to dump file
+        begin
+          $dumpfile("Mux21Test_v.vcd");
+          $dumpvars(0,Mux21Test_v);
+        end
+
+
 	task passTest;
 		input actualOut, expectedOut;
 		input [`STRLEN*8:0] testType;

@@ -25,6 +25,12 @@
 `define STRLEN 15
 module Decode24Test_v;
 
+initial //This initial block used to dump all wire/reg values to dump file
+         begin
+           $dumpfile("Decode24Test_v.vcd");
+           $dumpvars(0,Decode24Test_v);
+         end
+
 	task passTest;
 		input [3:0] actualOut, expectedOut;
 		input [`STRLEN*8:0] testType;
