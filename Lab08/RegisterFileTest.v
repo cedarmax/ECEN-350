@@ -25,6 +25,11 @@
 `define STRLEN 32
 module RegisterFileTest_v;
 
+initial 
+begin
+ $dumpfile("RegisterFileTest_v.vcd");
+ $dumpvars(0,RegisterFileTest_v);
+end
 
    task passTest;
       input [63:0] actualOut, expectedOut;
@@ -56,8 +61,10 @@ module RegisterFileTest_v;
    wire [63:0] 	  BusA;
    wire [63:0] 	  BusB;
 
+
+
    // Instantiate the Unit Under Test (UUT)
-   RegisterFile uut (
+   MiniRegisterFile uut (
 		     .BusA(BusA), 
 		     .BusB(BusB), 
 		     .BusW(BusW), 

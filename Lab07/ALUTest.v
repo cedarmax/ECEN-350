@@ -23,7 +23,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 `define STRLEN 32
-module ALUTest_v;
+ module ALUTest_v;
 
 	task passTest;
 		input [64:0] actualOut, expectedOut;
@@ -68,12 +68,40 @@ module ALUTest_v;
 		ALUCtrl = 0;
 		passed = 0;
 
-                // Here is one example test vector, testing the ADD instruction:
-		{BusA, BusB, ALUCtrl} = {64'h1234, 64'hABCD0000, 4'h2}; #40; passTest({Zero, BusW}, 65'h0ABCD1234, "ADD 0x1234,0xABCD0000", passed);
-		//Reformate and add your test vectors from the prelab here following the example of the testvector above.	
+ //ADD 
+#40; {BusA, BusB, ALUCtrl} = {64'h1, 64'h1, 4'h2}; #40; passTest({Zero, BusW}, 65'h00000000000000002, "ADD 0x1234,0xABCD0000", passed);
 
+#40; {BusA, BusB, ALUCtrl} = {64'h0, 64'h0, 4'h2}; passTest({Zero, BusW}, 65'h00000000000000002, "asdf", passed);	
 
-		allPassed(passed, 22);
+#40; {BusA, BusB, ALUCtrl} = {64'h1, 64'h0, 4'h2}; #40; passTest({Zero, BusW}, 65'h00000000000000001, "ADD 0xFF00,0xFF", passed);
+
+//SUB
+#40; {BusA, BusB, ALUCtrl} = {64'h2, 64'h2, 4'h6}; passTest({Zero, BusW}, 65'h00000000000000001, "SUB 0x2,0x2", passed);//4'b0110
+
+#40; {BusA, BusB, ALUCtrl} = {64'h3, 64'h2, 4'h6}; #40; passTest({Zero, BusW}, 65'h1, "SUB 0x3,0x2", passed);
+
+#40; {BusA, BusB, ALUCtrl} = {64'h2D, 64'h2B, 4'h6}; #40; passTest({Zero, BusW}, 65'h2, "SUB 0x2D,0x2B", passed);
+//AND 
+#40; {BusA, BusB, ALUCtrl} = {64'h0, 64'h0, 4'h0}; #40; passTest({Zero, BusW}, 65'h10000000000000000, "AND 0x0,0x0", passed);
+
+#40; {BusA, BusB, ALUCtrl} = {64'h1, 64'h1, 4'h0}; #40; passTest({Zero, BusW}, 65'h0000000000000001, "AND 0x1,0x1", passed);
+
+#40; {BusA, BusB, ALUCtrl} = {64'h0, 64'h12345678, 4'h0}; #40; passTest({Zero, BusW}, 65'h10000000000000000, "AND 0x0,0x12345678", passed);
+//OR
+#40; {BusA, BusB, ALUCtrl} = {64'h0, 64'h1, 4'h1}; #40; passTest({Zero, BusW}, 65'h1, "OR 0x0,0x1", passed);
+
+#40; {BusA, BusB, ALUCtrl} = {64'h1, 64'h1, 4'h1}; #40; passTest({Zero, BusW}, 65'h1, "OR 0x1,0x1", passed);
+
+#40; {BusA, BusB, ALUCtrl} = {64'h0, 64'h0, 4'h1}; #40; passTest({Zero, BusW}, 65'h10000000000000000, "OR 0x0,0x0", passed);
+
+//PassB
+#40; {BusA, BusB, ALUCtrl} = {64'h0, 64'h0, 4'h7}; #40; passTest({Zero, BusW}, 65'h10000000000000000, "PassB 0x0,0x0", passed);
+
+#40; {BusA, BusB, ALUCtrl} = {64'h2, 64'h3, 4'h7}; #40; passTest({Zero, BusW}, 65'h3, "PassB 0x2,0x3", passed);
+
+#40; {BusA, BusB, ALUCtrl} = {64'h2, 64'h2, 4'h7}; #40; passTest({Zero, BusW}, 65'h00000000000000002, "PassB 0x2,0x2", passed);
+
+		allPassed(passed, 15);
 	end
       
 endmodule
