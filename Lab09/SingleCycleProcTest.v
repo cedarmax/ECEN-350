@@ -84,12 +84,35 @@ module SingleCycleProcTest_v;
 	   @(posedge CLK);
 	   @(negedge CLK);
            $display("CurrentPC:%h",currentPC);
+		 $display("MemtoRegOut:%h",MemtoRegOut);
         end
       passTest(MemtoRegOut, 64'hF, "Results of Program 1", passed);
 
       // ***********************************************************
       // Add your new tests here
       // ***********************************************************
+/*
+MOVZ(11) X1, #1234
+MOVZ(10) X2, #5678
+MOVZ(01) X3, #9abc
+MOVZ(00) X4, #def0
+ADD X9, X1, X2
+ADD X9, X9, X3
+ADD X9, X9, X4
+STUR X9, [xzr,0x28]
+LDUR X10, [XZR,0X28]
+*/
+
+     while (currentPC < 64'h54)
+        begin
+	   @(posedge CLK);
+	   @(negedge CLK);
+           $display("CurrentPC:%h",currentPC);
+		 $display("MemtoRegOut:%h",MemtoRegOut);
+        end
+      passTest(MemtoRegOut, 64'h123456789abcdef0, "Results of Program 2", passed);
+
+
 
       // Done
       allPassed(passed, 2);   // Be sure to change the one to match

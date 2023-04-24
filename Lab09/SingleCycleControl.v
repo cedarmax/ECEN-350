@@ -24,7 +24,8 @@ module control(
 	       output reg 	branch,
 	       output reg 	uncond_branch,
 	       output reg [3:0] aluop,
-	       output reg [1:0] signop,
+	       output reg [2:0] signop,
+		//	output reg movz,
 	       input [10:0] 	opcode
 	       );
 
@@ -45,7 +46,8 @@ module control(
                branch        = 1'b0;
                uncond_branch = 1'b0;
                aluop         = 4'b0000;
-               signop        = 2'bxx;
+               signop        = 3'bxxx;
+			//	movz = 1'b0;
             end
 
           `OPCODE_ORRREG:
@@ -53,13 +55,14 @@ module control(
                reg2loc       = 1'b0;
                alusrc        = 1'b0;
                mem2reg       = 1'b0;
-               regwrite      = 1'b1;
+               regwrite      = 1'b1; //prelab incorrect
                memread       = 1'b0;
                memwrite      = 1'b0;
                branch        = 1'b0;
                uncond_branch = 1'b0;
                aluop         = 4'b0001;
-               signop        = 2'bxx;
+               signop        = 3'bxxx;
+			//	movz = 1'b0;
             end
 
           `OPCODE_ADDREG:
@@ -73,7 +76,8 @@ module control(
                branch        = 1'b0;
                uncond_branch = 1'b0;
                aluop         = 4'b0010;
-               signop        = 2'bxx;
+               signop        = 3'bxxx;
+			//	movz = 1'b0;
             end
 
           `OPCODE_SUBREG :
@@ -87,7 +91,8 @@ module control(
                branch        = 1'b0;
                uncond_branch = 1'b0;
                aluop         = 4'b0110;
-               signop        = 2'bxx;
+               signop        = 3'bxxx;
+			//	movz = 1'b0;
             end
 
           `OPCODE_ADDIMM:
@@ -101,7 +106,7 @@ module control(
                branch        = 1'b0;
                uncond_branch = 1'b0;
                aluop         = 4'b0010;
-               signop        = 2'b00;
+               signop        = 3'b000;
             end
           `OPCODE_SUBIMM:
             begin
@@ -114,33 +119,34 @@ module control(
                branch        = 1'b0;
                uncond_branch = 1'b0;
                aluop         = 4'b0110;
-               signop        = 2'b00;
+               signop        = 3'b000;
             end
           `OPCODE_MOVZ:
             begin
                reg2loc       = 1'bx;
-               alusrc        = 1'bx;
-               mem2reg       = 1'bx;
-               regwrite      = 1'b0;
-               memread       = 1'b0;
-               memwrite      = 1'b0;
-               branch        = 1'b0;
-               uncond_branch = 1'b0;
+               alusrc        = 1'b1;
+               mem2reg       = 1'b0;
+               regwrite      = 1'b1;
+               memread       = 1'bx;
+               memwrite      = 1'bx;
+               branch        = 1'bx;
+               uncond_branch = 1'bx;
                aluop         = 4'b0111;
-               signop        = 2'bxx;
+               signop        = 3'b111;
+
             end
           `OPCODE_B:
             begin
                reg2loc       = 1'bx;
-               alusrc        = 1'bx;
+               alusrc        = 1'bx; //x, wrong on prelab
                mem2reg       = 1'bx;
                regwrite      = 1'b0;
                memread       = 1'b0;
                memwrite      = 1'b0;
-               branch        = 1'b1;
+               branch        = 1'bx; //x
                uncond_branch = 1'b1;
-               aluop         = 4'b0111;
-               signop        = 2'b10;
+               aluop         = 4'bxxxx;
+               signop        = 3'b010;
             end
           `OPCODE_CBZ:
             begin
@@ -153,7 +159,7 @@ module control(
                branch        = 1'b1;
                uncond_branch = 1'b0;
                aluop         = 4'b0111;
-               signop        = 2'b11;
+               signop        = 3'b011;
             end
           `OPCODE_LDUR:
             begin
@@ -166,7 +172,8 @@ module control(
                branch        = 1'b0;
                uncond_branch = 1'b0;
                aluop         = 4'b0010;
-               signop        = 2'b01;
+               signop        = 3'b001;
+
             end
           `OPCODE_STUR:
             begin
@@ -179,7 +186,7 @@ module control(
                branch        = 1'b0;
                uncond_branch = 1'b0;
                aluop         = 4'b0010;
-               signop        = 2'b01;
+               signop        = 3'b001;
             end
           default:
             begin
@@ -192,7 +199,7 @@ module control(
                branch        = 1'b0;
                uncond_branch = 1'b0;
                aluop         = 4'bxxxx;
-               signop        = 2'bxx;
+               signop        = 3'bxxx;
             end
 
 	endcase

@@ -61,8 +61,26 @@ module InstructionMemory(Data, Address);
 	63'h030: Data = 32'hF84203ED;  //One last load to place stored value on memdbus for test checking.
 
 	/* Add code for your tests here */
-
-	
+/*
+MOVZ(11) X1, #1234
+MOVZ(10) X2, #5678
+MOVZ(01) X3, #9abc
+MOVZ(00) X4, #def0
+ADD X9, X1, X2
+ADD X9, X9, X3
+ADD X9, X9, X4
+STUR X9, [xzr,0x28]
+LDUR X10, [XZR,0X28]
+*/
+	63'h034: Data = {11'b11010010111, 16'h1234,5'd1};
+	63'h038: Data = {11'b11010010110, 16'h5678,5'd2};
+	63'h03C: Data = {11'b11010010101, 16'h9abc,5'd3};
+	63'h040: Data = {11'b11010010100, 16'hdef0,5'd4};
+	63'h044: Data = {11'b?0?01011???, 5'd1, 6'bxxxxxx, 5'd2, 5'd9};
+	63'h048: Data = {11'b?0?01011???, 5'd9, 6'bxxxxxx, 5'd3, 5'd9};
+	63'h04C: Data = {11'b?0?01011???, 5'd9, 6'bxxxxxx, 5'd4, 5'd9};
+	63'h050: Data = {11'b??111000000, 9'd28, 2'bxx, 5'd31, 5'd9};
+	63'h054: Data = {11'b??111000010, 9'd28, 2'bxx, 5'd31, 5'd10};
 	default: Data = 32'hXXXXXXXX;
       endcase
    end
